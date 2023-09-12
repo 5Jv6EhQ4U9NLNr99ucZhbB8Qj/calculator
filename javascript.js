@@ -1,11 +1,66 @@
-/* Calculator
-Basic Functions:
-    Add
-    Subtract
-    Multiply
-    Divide
-Another function will take variables as arguments and then call basic functions
-*/
+// Initialize variables
+let num1;
+let num2;
+let operator;
+
+// Internal version of displayed value
+let displayValue = '';
+
+// Initialize variables for document queries
+const display = document.querySelector('#display');
+const buttons = document.querySelectorAll('button');
+
+// Add eventListeners to buttons
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        if (button.id === 'button__1') {
+            displayValue += '1';
+            display.textContent += '1';
+        } else if (button.id === 'button__2') {
+            displayValue += '2';
+            display.textContent += '2';
+        } else if (button.id === 'button__3') {
+            displayValue += '3';
+            display.textContent += '3';
+        } else if (button.id === 'button__4') {
+            displayValue += '4';
+            display.textContent += '4';
+        } else if (button.id === 'button__5') {
+            displayValue += '5';
+            display.textContent += '5';
+        } else if (button.id === 'button__6') {
+            displayValue += '6';
+            display.textContent += '6';
+        } else if (button.id === 'button__7') {
+            displayValue += '7';
+            display.textContent += '7';
+        } else if (button.id === 'button__8') {
+            displayValue += '8';
+            display.textContent += '8';
+        } else if (button.id === 'button__9') {
+            displayValue += '9';
+            display.textContent += '9';
+        } else if (button.id === 'button__add') {
+            displayValue += ' + ';
+            display.textContent += ' + ';
+        } else if (button.id === 'button__subtract') {
+            displayValue += ' - ';
+            display.textContent += ' - ';
+        } else if (button.id === 'button__multiply') {
+            displayValue += ' * ';
+            display.textContent += ' * ';
+        } else if (button.id === 'button__divide') {
+            displayValue += ' / ';
+            display.textContent += ' / ';
+        } else if (button.id === 'button__clear') {
+            clear();
+        } else if (button.id === 'button__equal') {
+            display.textContent = operate(displayValue);
+        }
+    });
+});
+
+// Functions
 
 function add(num1, num2) {
     sum = num1 + num2;
@@ -27,55 +82,39 @@ function divide(num1, num2) {
     return quotient;
 }
 
-let num1;
-let num2;
-let operator;
-
-function operate(num1, num2, operator) {
-    if (operator == '+') {
-        return add(num1, num2);
-    } else if (operator == '-') {
-        return subtract(num1, num2);
-    } else if (operator == '*') {
-        return multiply(num1, num2);
-    } else if (operator == '/') {
-        return divide(num1, num2);
-    }
+function clear() {
+    displayValue = '';
+    display.textContent = '';
 }
 
-const display = document.querySelector('#display');
-const buttons = document.querySelectorAll('button');
-
-buttons.forEach((button) => {
-    button.addEventListener('click', () => {
-        if (button.id === 'button__1') {
-            display.textContent += '1';
-        } else if (button.id === 'button__2') {
-            display.textContent += '2';
-        } else if (button.id === 'button__3') {
-            display.textContent += '3';
-        } else if (button.id === 'button__4') {
-            display.textContent += '4';
-        } else if (button.id === 'button__5') {
-            display.textContent += '5';
-        } else if (button.id === 'button__6') {
-            display.textContent += '6';
-        } else if (button.id === 'button__7') {
-            display.textContent += '7';
-        } else if (button.id === 'button__8') {
-            display.textContent += '8';
-        } else if (button.id === 'button__9') {
-            display.textContent += '9';
-        } else if (button.id === 'button__+') {
-            display.textContent += '+';
-        } else if (button.id === 'button__-') {
-            display.textContent += '-';
-        } else if (button.id === 'button__*') {
-            display.textContent += '*';
-        } else if (button.id === 'button__/') {
-            display.textContent += '/';
-        } else if (button.id === 'button__clear') {
-            display.textContent = '';
+function operate(expression) {
+    expression = expression.split(' ');
+    let operation = '';
+    let solution;
+    expression.reduce((total, currentValue) => {
+        if (currentValue === '+' | currentValue === '-' | currentValue === '*' | currentValue === '*' | currentValue === '/') {
+            operation = currentValue;
+            return total;
+        } else {
+            total = Number(total);
+            currentValue = Number(currentValue);
+            switch (operation) {
+                case '+':
+                    solution = add(total, currentValue);
+                    break;
+                case '-':
+                    solution = subtract(total, currentValue);
+                    break;
+                case '*':
+                    solution = multiply(total, currentValue);
+                    break
+                case '/':
+                    solution = divide(total, currentValue);
+                    break;
+                default:
+                    solution = 'No operator found.'
+            } 
         }
-    });
-});
+    }), 0;
+    return solution;
+};
