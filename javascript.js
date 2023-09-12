@@ -90,6 +90,9 @@ buttons.forEach((button) => {
             display.textContent = solution;
         } else if (button.id === 'button__clear') {
             restart();
+        } else if (button.id === 'button__backspace') {
+            displayValue = displayValue.slice(0, (displayValue.length - 1));
+            display.textContent = displayValue;
         }
     });
 });
