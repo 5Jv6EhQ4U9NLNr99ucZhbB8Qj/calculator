@@ -53,9 +53,11 @@ buttons.forEach((button) => {
             displayValue += ' / ';
             display.textContent += ' / ';
         } else if (button.id === 'button__clear') {
-            clear();
+            restart();
         } else if (button.id === 'button__equal') {
-            display.textContent = operate(displayValue);
+            let solution = operate(displayValue);
+            displayValue = solution;
+            display.textContent = solution;
         }
     });
 });
@@ -78,11 +80,11 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) {
-    quotient = num1 * num2;
+    quotient = num1 / num2;
     return quotient;
 }
 
-function clear() {
+function restart() {
     displayValue = '';
     display.textContent = '';
 }
@@ -92,6 +94,7 @@ function operate(expression) {
     let operation = '';
     let solution;
     expression.reduce((total, currentValue) => {
+        console.log(total, currentValue);
         if (currentValue === '+' | currentValue === '-' | currentValue === '*' | currentValue === '*' | currentValue === '/') {
             operation = currentValue;
             return total;
@@ -101,20 +104,24 @@ function operate(expression) {
             switch (operation) {
                 case '+':
                     solution = add(total, currentValue);
-                    break;
+                    total = solution;
+                    return total;
                 case '-':
                     solution = subtract(total, currentValue);
-                    break;
+                    total = solution;
+                    return total;
                 case '*':
                     solution = multiply(total, currentValue);
-                    break
+                    total = solution;
+                    return total;
                 case '/':
                     solution = divide(total, currentValue);
-                    break;
+                    total = solution;
+                    return total;
                 default:
                     solution = 'No operator found.'
             } 
         }
-    }), 0;
+    });
     return solution;
 };
