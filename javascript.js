@@ -86,12 +86,10 @@ buttons.forEach((button) => {
         } else if (button.id === 'button__equal') {
             workingValue = ''
             let solution = operate(displayValue);
-            solution = solution.toString();
             displayValue = solution;
             display.textContent = solution;
         } else if (button.id === 'button__clear') {
-            displayValue = '';
-            display.textContent = '';
+            restart();
         } else if (button.id === 'button__backspace') {
             if (displayValue == false) {
 
@@ -123,6 +121,11 @@ function multiply(num1, num2) {
 function divide(num1, num2) {
     quotient = num1 / num2;
     return quotient;
+}
+
+function restart() {
+    displayValue = '';
+    display.textContent = '';
 }
 
 function operate(expression) {
